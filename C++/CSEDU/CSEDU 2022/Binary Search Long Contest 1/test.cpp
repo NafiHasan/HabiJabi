@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define fast_io() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
+
+int main() {
+	fast_io();
+	int cnt = 0;
+	for (int t = 0; t <= 1; t++) {
+		for (int i = 0; i <= (1 << 18); i++) {
+			int count = __builtin_popcount(i);
+			for (int j = 0; j <= (1 << count); j++) {
+				cnt++;
+			}
+		}
+	}
+	cout << cnt << "\n";
+	return 0;
+}
