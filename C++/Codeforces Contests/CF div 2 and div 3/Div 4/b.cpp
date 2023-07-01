@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define fast_io() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
+
+int main() {
+	fast_io();
+	int tc;
+	cin >> tc;
+	while (tc--) {
+		int n; cin >> n;
+		vector<int> a(n);
+		map<int, int> m;
+		int ans = -1;
+		for (int i = 0; i < n; i++) {
+			cin >> a[i];
+			m[a[i]]++;
+			if (m[a[i]] > 2)ans = a[i];
+		}
+		cout << ans << '\n';
+	}
+	return 0;
+}

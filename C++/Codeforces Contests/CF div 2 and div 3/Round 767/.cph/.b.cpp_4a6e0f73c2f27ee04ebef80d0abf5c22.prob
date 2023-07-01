@@ -1,0 +1,1 @@
+{"name":"Local: b","url":"c:\\Users\\User\\Desktop\\b.cpp","tests":[{"id":1642863067143,"input":"9\n1 1 0\n3 5 1\n13 13 0\n4 4 0\n3 7 4\n4 10 3\n2 4 0\n1 7 3\n1 5 3","output":"NO\nNO\nYES\nYES\nYES\nYES\nNO\nNO\nYES"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\User\\Desktop\\b.cpp","group":"local","local":true}
