@@ -1,0 +1,58 @@
+.entry-name {
+	font-weight:400;
+	font-size: 150%;
+	color: #BBBBBB;
+}
+
+.entry-value {
+	font-weight:400;
+	font-size: 150%;
+	text-align: right;
+	color: #FF8181;
+}
+
+body {
+	height: 100%
+}
+
+h2 {
+	font-weight:400;
+}
+
+h4 {
+	font-weight:400;
+}
+
+a:link {
+	color: #BBBBBB;
+}
+a:visited {
+	color: #BBBBBB;
+}
+a:hover { 
+	color: #BBBBBB;
+}
+a:active { 
+	color: #BBBBBB;
+}
+
+#title:link {
+	color: white;
+}
+#title:visited {
+	color: white;
+}
+#title:hover { 
+	color: white;
+}
+#title:active { 
+	color: white;
+}
+
+#download {
+	cursor:pointer;
+}
+
+#download:hover {
+	text-decoration:underline;
+}

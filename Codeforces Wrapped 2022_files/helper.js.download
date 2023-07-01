@@ -1,0 +1,88 @@
+let handle = "MikeMirzayanov";
+
+const BASE_URL = "https://codeforces.com/contest/";
+
+let url = window.location.href;
+if (url.includes('?')) {
+	url = url.slice(url.indexOf('?'));
+	const params = new URLSearchParams(url);
+	if (params.has("handle")) {
+		handle = params.get("handle");
+	}
+}
+
+function get_table_row(name, value) {
+	return '<div class="row"><div class="col col-sm-8"><p class="entry-name">'
+		 + name 
+		 + '</p></div><div class="col col-sm-4"><p class="entry-value">' 
+		 + value 
+		 + '</p></div></div>';
+}
+
+function get_table_row_wide(name, value) {
+	return '<div class="row"><div class="col col-sm-7"><p class="entry-name">'
+		 + name 
+		 + '</p></div><div class="col col-sm-5"><p class="entry-value">' 
+		 + value 
+		 + '</p></div></div>';
+}
+
+function get_link(problem) {
+	return '<a href="' + BASE_URL + problem.contestId + '/problem/' + problem.index + '" target="_blank">' + problem.name + '</a>';
+}
+
+$.ajax({
+    type: "POST",
+    url: "/load",
+    data: { "handle": handle },
+    success: function(response){
+        $("#rated")[0].innerHTML = response.rated;
+		$("#unrated")[0].innerHTML = response.unrated;
+		$("#top_perf")[0].innerHTML = response.top_perf;
+		for (let it of response.top_coord) {
+			$("#coords").append(get_table_row("<a href=https://codeforces.com/profile/" + it.coordinator + " target='_blank'>" + it.coordinator + "</a>", Math.round(it.average)));
+		}
+		for (let it of response.hardest) {
+			$("#hardest").append(get_table_row(get_link(it), it.rating));
+		}
+		$("#earliest").append(get_table_row_wide(get_link(response.earliest), response.earliest.time));
+		$("#latest").append(get_table_row_wide(get_link(response.latest), response.latest.time));
+		$("#most_tries").append(get_table_row(get_link(response.most_tries), response.most_tries.count));
+		document.getElementById('loading').style = "display: none";
+		document.getElementById('card-content').style = "";
+		save();
+		$("#download").attr("href", "/saved/" + handle + ".png");
+		$("#download").attr("target", "_blank");
+    }
+});
+
+function saveImage(handle, base64data) {
+	if (base64data.length > 500 * 1024) return;
+	$.ajax({
+		type: "POST",
+		url: "/save",
+		data: { "handle": handle, "data": base64data },
+		success: function(response){}
+	});
+}
+
+function save(){
+	document.getElementById('download').style = "display: none";
+	var element = document.getElementById('card').firstChild;
+	console.log(element.offsetWidth, element.offsetHeight);
+	html2canvas(element, {
+		width: element.offsetWidth - 6,
+		height: element.offsetHeight - 6,
+		x: 3,
+		y: 3
+	}).then(function (canvas) {
+		canvas.toBlob(function (blob) {
+			var reader = new FileReader();
+			reader.readAsDataURL(blob); 
+			reader.onloadend = function() {
+				saveImage(handle, reader.result);
+			}
+        });
+    });
+    document.getElementById('download').style = "color: grey; font-size: 120%";
+}
